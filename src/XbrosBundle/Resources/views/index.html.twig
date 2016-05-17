@@ -1,0 +1,20 @@
+{# src/XbrosBundle/Resources/views/layout.html.twig #}
+
+{% extends "::layout.html.twig" %}
+
+{% block title %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+    <p>Welcome to xbros!</p>
+    <p>This is our sandbox for web development learning. Have a look at some projects below.</p>
+    <div id="rubik.js" class="section level1">
+        <h1>rubik.js</h1>
+        <p>A simple JavaScript Rubik’s cube.</p>
+        <p>See a demo <a href="#">here</a>.</p>
+        <p>View the project on <a href="https://github.com/xbros/rubik">GitHub</a>.</p>
+    </div>
+
+{% endblock %}
