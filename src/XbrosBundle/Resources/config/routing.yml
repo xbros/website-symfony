@@ -1,0 +1,3 @@
+xbros_homepage:
+    path:     /
+    defaults: { _controller: XbrosBundle:Default:index }
