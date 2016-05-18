@@ -13,6 +13,11 @@ class DefaultController extends Controller
 
     public function resourcesAction()
     {
-        return $this->render('XbrosBundle:Default:ressources.html.twig');
+        return $this->render('XbrosBundle:Default:resources.html.twig');
+    }
+
+    public function codingRulesAction()
+    {
+        return $this->render('XbrosBundle:Default:coding-rules.html.twig');
     }
 }

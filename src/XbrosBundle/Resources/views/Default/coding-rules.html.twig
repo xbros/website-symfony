@@ -1,0 +1,29 @@
+{# src/XbrosBundle/Resources/views/coding-rules.html.twig #}
+
+{% extends "::layout.html.twig" %}
+
+{% block title %}
+    {{ parent() }} - Coding Rules
+{% endblock %}
+
+{% block body %}
+
+    <div class="fluid-row" id="header">
+
+        <h1 class="title toc-ignore">Coding rules</h1>
+
+    </div>
+
+
+    <ul>
+        <li>Encodage UTF-8</li>
+        <li>Noms de fichiers et dossiers : minuscule sans accent et sans espace</li>
+    </ul>
+    <h1>Symfony</h1>
+    <ul>
+        <li>dossier /app : configuration</li>
+        <li>dossier /src : Bundles (templates, rooting, controller...)</li>
+        <li>dossier /web : libraries, images, logo, stylesheets...</li>
+    </ul>
+
+{% endblock %}
