@@ -1,3 +1,7 @@
 xbros_homepage:
     path:     /
     defaults: { _controller: XbrosBundle:Default:index }
+
+xbros_resources:
+    path:     /resources
+    defaults: { _controller: XbrosBundle:Default:resources }

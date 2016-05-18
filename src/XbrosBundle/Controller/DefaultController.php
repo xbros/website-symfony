@@ -10,4 +10,9 @@ class DefaultController extends Controller
     {
         return $this->render('XbrosBundle:Default:index.html.twig');
     }
+
+    public function resourcesAction()
+    {
+        return $this->render('XbrosBundle:Default:ressources.html.twig');
+    }
 }
