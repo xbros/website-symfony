@@ -17,3 +17,7 @@ xbros_todo:
 xbros_system:
     path:     /system
     defaults: { _controller: XbrosBundle:Default:system }
+
+xbros_adrien:
+    path:     /adrien
+    defaults: { _controller: XbrosBundle:Default:adrien }

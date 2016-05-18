@@ -30,4 +30,9 @@ class DefaultController extends Controller
     {
         return $this->render('XbrosBundle:Default:system.html.twig');
     }
+
+    public function adrienAction()
+    {
+        return $this->render('XbrosBundle:Default:adrien.html.twig');
+    }
 }
