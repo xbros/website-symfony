@@ -12,10 +12,11 @@
     <meta name="generator" content="pandoc" />
 
 
-
-    {% block title %}
-    <title>xbros</title>
-    {% endblock %}
+    <title>
+        {% block title %}
+            xbros
+        {% endblock %}
+    </title>
 
     <script src="{{ asset('lib/jquery-1.11.3/jquery.min.js') }}"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -144,7 +145,7 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-coffee"></i> <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#ressources.html">resources</a></li>
+                            <li><a href="{{ path('xbros_resources') }}">resources</a></li>
                             <li><a href="#codingrules.html">coding rules</a></li>
                             <li><a href="#todo.html">todo</a></li>
                             <li><a href="#system.html">system</a></li>
@@ -179,15 +180,6 @@
             </div><!-- /.navbar-collapse -->
         </div><!--/.container -->
     </div><!--/.navbar -->
-
-    <div class="fluid-row" id="header">
-
-
-
-        <h1 class="title toc-ignore">xbros</h1>
-
-    </div>
-
 
     {% block body %}
 
