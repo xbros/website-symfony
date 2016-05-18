@@ -1,0 +1,41 @@
+{# src/XbrosBundle/Resources/views/project-rubik.html.twig #}
+
+{% extends "::layout.html.twig" %}
+
+{% block title %}
+    {{ parent() }} - Rubik
+{% endblock %}
+
+{% block head %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('simon.css') }}">
+    <link rel="stylesheet" href="{{ asset('rubik/rubik.css') }}">
+{% endblock %}
+
+{% block body %}
+
+    <h1>Rubik's cube</h1>
+    <p>
+        Use the buttons below or the keyboard to move the cube.
+        Clockwise 90°: [F]ront, [B]ack, [L]eft, [R]ight, [U]p, [D]own.
+        Anti-clockwise 90°: Shift-[key].
+        180°: Shift-Ctrl-[key].
+    </p>
+    <div id='my-cube' class="rb-cube" style="text-align:center;"></div>
+    <div id='my-ctrl' class="rb-ctrl" style="text-align:center;"></div>
+    <div class="rb-moves">
+        <button onclick="document.getElementById('my-moves').classList.toggle('hide')">Moves</button>
+        <p id='my-moves'></p>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    {{ parent() }}
+    <script src="{{ asset('rubik/rubik.js') }}"></script>
+    <script src="{{ asset('rubik/script.js') }}"></script>
+    <!--
+    <script src="{{ asset('lib/jquery-1.11.0/jquery.min.js') }}"></script>
+    <script src="{{ asset('lib/bootstrap-3.3.1/js/bootstrap.min.js') }}"></script>
+    -->
+{% endblock %}

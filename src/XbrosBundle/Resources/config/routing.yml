@@ -29,3 +29,7 @@ xbros_simon:
 xbros_simonmusic:
     path:     /simon/music
     defaults: { _controller: XbrosBundle:Default:simonMusic }
+
+xbros_projectrubik:
+    path:     /project/rubik
+    defaults: { _controller: XbrosBundle:Default:projectRubik }

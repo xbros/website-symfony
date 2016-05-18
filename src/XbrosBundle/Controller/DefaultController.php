@@ -45,4 +45,9 @@ class DefaultController extends Controller
     {
         return $this->render('XbrosBundle:Default:simon-music.html.twig');
     }
+
+    public function projectRubikAction()
+    {
+        return $this->render('XbrosBundle:Default:project-rubik.html.twig');
+    }
 }
