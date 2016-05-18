@@ -20,4 +20,9 @@ class DefaultController extends Controller
     {
         return $this->render('XbrosBundle:Default:coding-rules.html.twig');
     }
+
+    public function todoAction()
+    {
+        return $this->render('XbrosBundle:Default:todo.html.twig');
+    }
 }

@@ -9,3 +9,7 @@ xbros_resources:
 xbros_codingrules:
     path:     /coding-rules
     defaults: { _controller: XbrosBundle:Default:codingRules }
+
+xbros_todo:
+    path:     /todo
+    defaults: { _controller: XbrosBundle:Default:todo }

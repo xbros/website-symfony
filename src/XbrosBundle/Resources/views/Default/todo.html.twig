@@ -1,0 +1,25 @@
+{# src/XbrosBundle/Resources/views/todo.html.twig #}
+
+{% extends "::layout.html.twig" %}
+
+{% block title %}
+    {{ parent() }} - todo
+{% endblock %}
+
+{% block body %}
+
+    <div class="fluid-row" id="header">
+
+        <h1 class="title toc-ignore">To do</h1>
+
+    </div>
+
+
+    <ul>
+        <li>[<i class="fa fa-check" aria-hidden="true"></i>] style css: couleurs texte et liens</li>
+        <li>[<i class="fa fa-check" aria-hidden="true"></i>] page d’accueil</li>
+        <li>[<i class="fa fa-times" aria-hidden="true"></i>] partie administration</li>
+        <li>[<i class="fa fa-times" aria-hidden="true"></i>] patie musique</li>
+    </ul>
+
+{% endblock %}
