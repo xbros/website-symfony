@@ -35,4 +35,14 @@ class DefaultController extends Controller
     {
         return $this->render('XbrosBundle:Default:adrien.html.twig');
     }
+
+    public function simonAction()
+    {
+        return $this->render('XbrosBundle:Default:simon.html.twig');
+    }
+
+    public function simonMusicAction()
+    {
+        return $this->render('XbrosBundle:Default:simon-music.html.twig');
+    }
 }

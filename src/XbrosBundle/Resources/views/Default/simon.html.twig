@@ -1,0 +1,17 @@
+{# src/XbrosBundle/Resources/views/simon.html.twig #}
+
+{% extends "::layout.html.twig" %}
+
+{% block title %}
+    {{ parent() }} - Simon
+{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <h1>Simon</h1>
+
+        <a class="btn btn-default" href="{{ path('xbros_simonmusic') }}"><i class="fa fa-headphones"></i> Music</a>
+    </div>
+
+{% endblock %}
