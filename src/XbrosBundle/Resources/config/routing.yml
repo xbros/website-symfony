@@ -13,3 +13,7 @@ xbros_codingrules:
 xbros_todo:
     path:     /todo
     defaults: { _controller: XbrosBundle:Default:todo }
+
+xbros_system:
+    path:     /system
+    defaults: { _controller: XbrosBundle:Default:system }

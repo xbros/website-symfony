@@ -25,4 +25,9 @@ class DefaultController extends Controller
     {
         return $this->render('XbrosBundle:Default:todo.html.twig');
     }
+
+    public function systemAction()
+    {
+        return $this->render('XbrosBundle:Default:system.html.twig');
+    }
 }

@@ -1,0 +1,119 @@
+{# src/XbrosBundle/Resources/views/system.html.twig #}
+
+{% extends "::layout.html.twig" %}
+
+{% block title %}
+    {{ parent() }} - System
+{% endblock %}
+
+{% block body %}
+
+    <div class="fluid-row" id="header">
+
+        <h1 class="title toc-ignore">System</h1>
+
+    </div>
+
+
+    <ul>
+        <li><p>Ubuntu server 14.04 trusty</p></li>
+        <li><p>Permissions au groupe xbros</p></li>
+    </ul>
+    <pre class="{bash}"><code>cd /home/xbros
+            chmod -R g+w . public_html domains etc tmp</code></pre>
+    <ul>
+        <li><p>Clé ssh dans <code>~/.ssh/id_rsa</code> en permission 600.</p></li>
+        <li><p>Crontab</p></li>
+    </ul>
+    <pre><code>SHELL=/bin/bash
+            MAILTO=&quot;&quot;
+            PATH=/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/bin
+            * * * * * eval `keychain --noask --eval id_rsa` &amp;&amp; cd /home/xbros/public_html/ &amp;&amp; git pull &amp;&amp; make</code></pre>
+    <div id="packages" class="section level1">
+
+        <h1>Symfony</h1>
+
+        <ul>
+            <li>dossier <code>/app</code> : configuration</li>
+            <li>dossier <code>/src</code> : Bundles (templates, rooting, controller...)</li>
+            <li>dossier <code>/web</code> : libraries, images, logo, stylesheets...</li>
+        </ul>
+
+        <h1>Packages</h1>
+
+        <div id="keychain" class="section level3">
+            <h3>keychain</h3>
+            <p>apt-get install keychain</p>
+        </div>
+
+        <div id="git" class="section level3">
+            <h3>git</h3>
+            <p>apt-get install git</p>
+        </div>
+
+        <div id="nodejs" class="section level3">
+            <h3>nodejs</h3>
+            <p>apt-get install nodejs npm</p>
+        </div>
+
+        <div id="ruby" class="section level3">
+            <h3>ruby</h3>
+<pre class="{bash}"><code>apt-get -y update
+        apt-get -y install build-essential zlib1g-dev libssl-dev libreadline6-dev libyaml-dev
+        cd /tmp
+        wget http://ftp.ruby-lang.org/pub/ruby/2.3/ruby-2.3.0.tar.gz
+        tar -xvzf ruby-2.3.0.tar.gz
+        cd ruby-2.3.0/
+        ./configure --prefix=/usr/local
+        make
+        make install
+
+        apt-get install sqlite3
+        gem install rails bundler jekyll ruhoh</code></pre>
+        </div>
+
+        <div id="cmake" class="section level3">
+            <h3>cmake</h3>
+            <p>apt-get install cmake</p>
+        </div>
+
+        <div id="boost" class="section level3">
+            <h3>boost</h3>
+            <p>apt-get install libboost-all-dev</p>
+        </div>
+
+        <div id="texlive" class="section level3">
+            <h3>texlive</h3>
+            <p>apt-get install texlive-latex-extra texlive-fonts-extra</p>
+        </div>
+
+        <div id="pandoc" class="section level3">
+            <h3>pandoc</h3>
+<pre class="{bash}"><code>wget https://github.com/jgm/pandoc/releases/download/1.16.0.2/pandoc-1.16.0.2-1-amd64.deb
+        dpkg -i pandoc-1.16.0.2-1-amd64.deb
+        rm pandoc-1.16.0.2-1-amd64.deb</code></pre>
+        </div>
+
+        <div id="r" class="section level3">
+            <h3>R</h3>
+            <p><a href="https://cran.r-project.org/bin/linux/ubuntu/README" class="uri">https://cran.r-project.org/bin/linux/ubuntu/README</a></p>
+            <p>Ajouter à <code>/etc/apt/sources.list</code> :</p>
+<pre><code>#CRAN mirror for R
+        deb https://cran.univ-paris1.fr/bin/linux/ubuntu trusty/</code></pre>
+<pre class="{bash}"><code>apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
+        apt-get update
+        apt-get install r-base r-base-dev</code></pre>
+        </div>
+
+        <div id="shiny-server" class="section level3">
+            <h3>shiny server</h3>
+            <p><a href="https://www.rstudio.com/products/shiny/download-server/" class="uri">https://www.rstudio.com/products/shiny/download-server/</a></p>
+            <p><a href="https://rstudio.github.io/shiny-server/latest/#install-shiny" class="uri">https://rstudio.github.io/shiny-server/latest/#install-shiny</a></p>
+<pre class="{bash}"><code>su - -c &quot;R -e \&quot;install.packages(&#39;shiny&#39;, repos=&#39;https://cran.rstudio.com/&#39;)\&quot;&quot;
+        apt-get install gdebi-core
+        wget https://download3.rstudio.org/ubuntu-12.04/x86_64/shiny-server-1.4.1.759-amd64.deb
+        gdebi shiny-server-1.4.1.759-amd64.deb</code></pre>
+        </div>
+    </div>
+
+{% endblock %}
