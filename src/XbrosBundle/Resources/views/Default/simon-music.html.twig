@@ -6,6 +6,11 @@
     {{ parent() }} - Music
 {% endblock %}
 
+{% block head %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('audio-player.css') }}">
+{% endblock %}
+
 {% block body %}
 
     <div class="container">
@@ -14,6 +19,45 @@
         <a class="btn btn-default" href="https://soundcloud.com/simon-todeschini" target="_blank"><i class="fa fa-soundcloud"></i> SoundCloud</a>
         <a class="btn btn-default" href="https://www.paypal.me/SimonTodeschini/" target="_blank"><i class="fa fa-cc-paypal"></i> Donation - PayPal</a>
 
-    </div>
+        {% if tracks is not empty %}
+            {% for track in tracks %}
 
+                <h2>{{ track.name }}</h2>
+
+                <div class="player" >
+                    <audio id="player-{{ track.id }}" ontimeupdate="update(this, 'progress-{{ track.id }}')">
+                        <source src="{{ asset(track.pathMp3) }}">
+                    </audio>
+                    <img class="img-player" src="{{ asset(track.pathImg) }}">
+                    <div class="rest-player">
+                        <div class="progress" onclick="clickProgress('player-{{ track.id }}', this, event, 'progress-{{ track.id }}')">
+                            <div class="progress-bar" id="progress-{{ track.id }}" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <button class="control btn btn-default" onclick="play('player-{{ track.id }}', this)">
+                            <i class="fa fa-play"></i>
+                        </button>
+                        <button class="control btn btn-default" onclick="stop('player-{{ track.id }}')"><i class="fa fa-stop"></i>
+                        </button><div class="dropdown btn btn-default">
+                            <div href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-volume-up"></i> Volume <span class="caret"></span>
+                            </div>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <input type="range" name="volume" min="0" max="100" value="80" onchange="volume('player-{{ track.id }}', this.value)">
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+            {% endfor %}
+        {% endif %}
+
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ parent() }}
+    <script src="{{ asset('audio-player.js') }}"></script>
 {% endblock %}

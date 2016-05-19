@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="XbrosBundle\Entity\SimonMusic" table="simon_music">
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="name" type="string" column="name" length="30" nullable="false"/>
+    <field name="pathWav" type="string" column="path_wav" length="150" nullable="true"/>
+    <field name="pathMp3" type="string" column="path_mp3" length="150" nullable="true"/>
+    <field name="pathImg" type="string" column="path_img" length="150" nullable="true"/>
+    <field name="linkSite" type="string" column="link_site" length="30" nullable="true"/>
+    <field name="linkUrl" type="string" column="link_url" length="100" nullable="true"/>
+    <field name="date" type="date" column="date" nullable="false"/>
+  </entity>
+</doctrine-mapping>

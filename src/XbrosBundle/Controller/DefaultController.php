@@ -43,7 +43,19 @@ class DefaultController extends Controller
 
     public function simonMusicAction()
     {
-        return $this->render('XbrosBundle:Default:simon-music.html.twig');
+        $em = $this->getDoctrine()->getManager();
+
+        $tracks = $em
+            ->getRepository('XbrosBundle:SimonMusic')
+            ->findBy(
+                array(),    //where
+                array('date' => 'ASC'
+                )  //order
+            );
+
+        return $this->render('XbrosBundle:Default:simon-music.html.twig', array(
+            'tracks' => $tracks
+        ));
     }
 
     public function projectRubikAction()
