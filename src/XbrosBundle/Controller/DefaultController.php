@@ -41,19 +41,33 @@ class DefaultController extends Controller
         return $this->render('XbrosBundle:Default:simon.html.twig');
     }
 
-    public function simonMusicAction()
+    public function simonMusicAction($track)
     {
         $em = $this->getDoctrine()->getManager();
+
+        if(isset($track))
+        {
+            $track_playing = $em
+                ->getRepository('XbrosBundle:SimonMusic')
+                ->findOneBy(
+                    array('name' => $track)
+                );
+        }
+        else
+        {
+            $track_playing = array();
+        }
 
         $tracks = $em
             ->getRepository('XbrosBundle:SimonMusic')
             ->findBy(
                 array(),    //where
-                array('date' => 'ASC'
+                array('date' => 'DESC'
                 )  //order
             );
 
         return $this->render('XbrosBundle:Default:simon-music.html.twig', array(
+            'track_playing' => $track_playing,
             'tracks' => $tracks
         ));
     }

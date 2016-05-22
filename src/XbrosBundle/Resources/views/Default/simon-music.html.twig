@@ -8,7 +8,8 @@
 
 {% block head %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('audio-player.css') }}">
+    <script src="{{ asset('audioplayer/js/mediaelement-and-player.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('audioplayer/css/style.css') }}" media="screen">
 {% endblock %}
 
 {% block body %}
@@ -19,45 +20,62 @@
         <a class="btn btn-default" href="https://soundcloud.com/simon-todeschini" target="_blank"><i class="fa fa-soundcloud"></i> SoundCloud</a>
         <a class="btn btn-default" href="https://www.paypal.me/SimonTodeschini/" target="_blank"><i class="fa fa-cc-paypal"></i> Donation - PayPal</a>
 
-        {% if tracks is not empty %}
-            {% for track in tracks %}
+        <hr>
 
-                <h2>{{ track.name }}</h2>
+        {% if track_playing is not empty %}
+            <h3>Track Playing</h3>
 
-                <div class="player" >
-                    <audio id="player-{{ track.id }}" ontimeupdate="update(this, 'progress-{{ track.id }}')">
-                        <source src="{{ asset(track.pathMp3) }}">
-                    </audio>
-                    <img class="img-player" src="{{ asset(track.pathImg) }}">
-                    <div class="rest-player">
-                        <div class="progress" onclick="clickProgress('player-{{ track.id }}', this, event, 'progress-{{ track.id }}')">
-                            <div class="progress-bar" id="progress-{{ track.id }}" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <button class="control btn btn-default" onclick="play('player-{{ track.id }}', this)">
-                            <i class="fa fa-play"></i>
-                        </button>
-                        <button class="control btn btn-default" onclick="stop('player-{{ track.id }}')"><i class="fa fa-stop"></i>
-                        </button><div class="dropdown btn btn-default">
-                            <div href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-volume-up"></i> Volume <span class="caret"></span>
-                            </div>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <input type="range" name="volume" min="0" max="100" value="80" onchange="volume('player-{{ track.id }}', this.value)">
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+            <div class="audio-player">
+                <h1>track_playing.name</h1>
+                <img class="cover" src="{{ asset(track_playing.pathImg) }}" alt="">
+                <audio id="audio-player" src="{{ asset(track_playing.pathMp3) }}" type="audio/mp3" controls="controls"></audio>
+            </div>
 
-                <hr>
-            {% endfor %}
+            <hr>
         {% endif %}
 
+        {% if tracks is not empty %}
+            <h3>Track List</h3>
+
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Cover</th>
+                    <th>Track Name</th>
+                    <th>Date of publication</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for track in tracks %}
+                    <tr class="clickable-row" data-href="{{ path('xbros_simonmusic', {'track' : track.name}) }}">
+                        <td><img src="{{ asset(track.pathImg) }}" alt="cover-{{ track.name }}"></td>
+                        <td>{{ track.name }}</td>
+                        <td>{{ track.date|date("d/m/Y") }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
     </div>
 {% endblock %}
 
 {% block scripts %}
     {{ parent() }}
-    <script src="{{ asset('audio-player.js') }}"></script>
+    <script>
+        jQuery(document).ready(function($) {
+            $(".clickable-row").click(function() {
+                window.document.location = $(this).data("href");
+            });
+        });
+
+        $(document).ready(function() {
+            $('#audio-player').mediaelementplayer({
+                alwaysShowControls: true,
+                features: ['playpause','volume','progress'],
+                audioVolume: 'horizontal',
+                audioWidth: 400,
+                audioHeight: 95
+            });
+        });
+    </script>
 {% endblock %}
