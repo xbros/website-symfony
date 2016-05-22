@@ -10,6 +10,18 @@
     {{ parent() }}
     <script src="{{ asset('audioplayer/js/mediaelement-and-player.min.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('audioplayer/css/style.css') }}" media="screen">
+
+    <style>
+        tbody tr
+        {
+            cursor: pointer;
+        }
+
+        .audio-player, .multiple-buttons
+        {
+            display: inline-block;
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
@@ -25,10 +37,28 @@
         {% if track_playing is not empty %}
             <h3>Track Playing</h3>
 
-            <div class="audio-player">
-                <h1>track_playing.name</h1>
-                <img class="cover" src="{{ asset(track_playing.pathImg) }}" alt="">
-                <audio id="audio-player" src="{{ asset(track_playing.pathMp3) }}" type="audio/mp3" controls="controls"></audio>
+            <div class="track-chosen">
+                <div class="audio-player">
+                    <h1>{{ track_playing.name }}</h1>
+                    <img class="cover" src="{{ asset(track_playing.pathImg) }}" alt="">
+                    <audio id="audio-player" src="{{ asset(track_playing.pathMp3) }}" type="audio/mp3" controls="controls"></audio>
+                </div>
+
+                <div class="multiple-buttons">
+                    {% if track_playing.linkSite == "soundcloud" %}
+                        <a class="btn btn-default" href="{{ track_playing.linkUrl }}" target="_blank"><i class="fa fa-soundcloud"></i> {{ track_playing.name }}</a>
+                    {% else %}
+                        <a class="btn btn-default" href="{{ track_playing.linkUrl }}" target="_blank"><i class="fa fa-external-link"></i> {{ track_playing.name }}</a>
+                    {% endif %}
+
+                    {% if track_playing.pathWav is not null %}
+                        <a class="btn btn-default" href="{{ asset(track_playing.pathWav) }}" download="{{ track_playing.name }}.wav" ><i class="fa fa-file-audio-o"></i> wav Download</a>
+                    {% endif %}
+
+                    {% if track_playing.pathMp3 is not null %}
+                        <a class="btn btn-default" href="{{ asset(track_playing.pathMp3) }}" download="{{ track_playing.name }}.mp3" ><i class="fa fa-file-audio-o"></i> mp3 Download</a>
+                    {% endif %}
+                </div>
             </div>
 
             <hr>
