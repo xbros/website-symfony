@@ -1,0 +1,223 @@
+<?php
+
+namespace AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * SimonMusic
+ */
+class SimonMusic
+{
+    /**
+     * @var string
+     */
+    private $name;
+
+    /**
+     * @var string
+     */
+    private $pathWav;
+
+    /**
+     * @var string
+     */
+    private $pathMp3;
+
+    /**
+     * @var string
+     */
+    private $pathImg;
+
+    /**
+     * @var string
+     */
+    private $linkSite;
+
+    /**
+     * @var string
+     */
+    private $linkUrl;
+
+    /**
+     * @var \DateTime
+     */
+    private $date;
+
+    /**
+     * @var integer
+     */
+    private $id;
+
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return SimonMusic
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set pathWav
+     *
+     * @param string $pathWav
+     * @return SimonMusic
+     */
+    public function setPathWav($pathWav)
+    {
+        $this->pathWav = $pathWav;
+
+        return $this;
+    }
+
+    /**
+     * Get pathWav
+     *
+     * @return string 
+     */
+    public function getPathWav()
+    {
+        return $this->pathWav;
+    }
+
+    /**
+     * Set pathMp3
+     *
+     * @param string $pathMp3
+     * @return SimonMusic
+     */
+    public function setPathMp3($pathMp3)
+    {
+        $this->pathMp3 = $pathMp3;
+
+        return $this;
+    }
+
+    /**
+     * Get pathMp3
+     *
+     * @return string 
+     */
+    public function getPathMp3()
+    {
+        return $this->pathMp3;
+    }
+
+    /**
+     * Set pathImg
+     *
+     * @param string $pathImg
+     * @return SimonMusic
+     */
+    public function setPathImg($pathImg)
+    {
+        $this->pathImg = $pathImg;
+
+        return $this;
+    }
+
+    /**
+     * Get pathImg
+     *
+     * @return string 
+     */
+    public function getPathImg()
+    {
+        return $this->pathImg;
+    }
+
+    /**
+     * Set linkSite
+     *
+     * @param string $linkSite
+     * @return SimonMusic
+     */
+    public function setLinkSite($linkSite)
+    {
+        $this->linkSite = $linkSite;
+
+        return $this;
+    }
+
+    /**
+     * Get linkSite
+     *
+     * @return string 
+     */
+    public function getLinkSite()
+    {
+        return $this->linkSite;
+    }
+
+    /**
+     * Set linkUrl
+     *
+     * @param string $linkUrl
+     * @return SimonMusic
+     */
+    public function setLinkUrl($linkUrl)
+    {
+        $this->linkUrl = $linkUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get linkUrl
+     *
+     * @return string 
+     */
+    public function getLinkUrl()
+    {
+        return $this->linkUrl;
+    }
+
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     * @return SimonMusic
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime 
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+}

@@ -1,4 +1,4 @@
-{# src/XbrosBundle/Resources/views/layout.html.twig #}
+{# src/XbrosBundle/Resources/views/index.html.twig #}
 
 {% extends "::layout.html.twig" %}
 
@@ -7,6 +7,13 @@
 {% endblock %}
 
 {% block body %}
+
+    {% for message in app.session.flashbag.get('notice') %}
+        <div class="alert alert-info" role="alert">
+            <span class="glyphicon glyphicon-ok-sign"></span>
+            <strong>{{ message }}</strong></div>
+
+    {% endfor %}
 
     <div class="fluid-row" id="header">
 

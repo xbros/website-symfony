@@ -164,22 +164,40 @@
                         </ul>
                     </li>
 
-                    <li><a href="https://github.com/xbros"><i class="fa fa-github"></i> </a></li>
-
-                    <li><a href="https://todxbros.slack.com"><i class="fa fa-slack"></i> </a></li>
-
-                    <!-- ADMIN menu -->
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-server"></i> <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="https://sd-63062.tspace.fr:10000">webmin</a></li>
-                            <li><a href="https://sd-63062.tspace.fr/phpmyadmin/">phpmyadmin</a></li>
-                            <li><a href="https://sd-63062.tspace.fr/munin/">munin</a></li>
-                        </ul>
-                    </li>
+                    <li><a href="https://github.com/xbros" target="_blank"><i class="fa fa-github"></i> </a></li>
 
                 </ul>
 
+                <ul class="nav navbar-nav navbar-right">
+                    {% if session.login is defined %}
+                        <li><a href="https://todxbros.slack.com" target="_blank"><i class="fa fa-slack"></i> </a></li>
+
+                        <!-- ADMIN menu -->
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-server"></i> <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="https://xbros.tspace.fr:10000" target="_blank">webmin</a></li>
+                                <li><a href="https://phpmyadmin.xbros.tspace.fr" target="_blank">phpmyadmin</a></li>
+                                <li><a href="https://xbros.tspace.fr/munin/" target="_blank">munin</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown">
+                            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+                                <span class="glyphicon glyphicon-user"></span>
+                                {{ session.login }}
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{{ path('admin_logout') }}">Déconnexion</a></li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li><a href="{{ path('admin_login') }}" class="pull-right">
+                                <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+                            </a></li>
+                    {% endif %}
+                </ul>
             </div><!-- /.navbar-collapse -->
         </div><!--/.container -->
     </div><!--/.navbar -->

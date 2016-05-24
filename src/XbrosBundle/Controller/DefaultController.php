@@ -3,46 +3,80 @@
 namespace XbrosBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DefaultController extends Controller
 {
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        return $this->render('XbrosBundle:Default:index.html.twig');
+        $session = $request->getSession();
+
+        return $this->render('XbrosBundle:Default:index.html.twig', array(
+            'session' => $session->all(),
+        ));
     }
 
-    public function resourcesAction()
+    public function resourcesAction(Request $request)
     {
-        return $this->render('XbrosBundle:Default:resources.html.twig');
+        $session = $request->getSession();
+
+        return $this->render('XbrosBundle:Default:resources.html.twig', array(
+            'session' => $session->all(),
+        ));
     }
 
-    public function codingRulesAction()
+    public function codingRulesAction(Request $request)
     {
-        return $this->render('XbrosBundle:Default:coding-rules.html.twig');
+        $session = $request->getSession();
+
+        return $this->render('XbrosBundle:Default:coding-rules.html.twig', array(
+            'session' => $session->all(),
+        ));
     }
 
-    public function todoAction()
+    public function todoAction(Request $request)
     {
-        return $this->render('XbrosBundle:Default:todo.html.twig');
+        $session = $request->getSession();
+
+        return $this->render('XbrosBundle:Default:todo.html.twig', array(
+            'session' => $session->all(),
+        ));
     }
 
-    public function systemAction()
+    public function systemAction(Request $request)
     {
-        return $this->render('XbrosBundle:Default:system.html.twig');
+        $session = $request->getSession();
+
+        return $this->render('XbrosBundle:Default:system.html.twig', array(
+            'session' => $session->all(),
+        ));
     }
 
-    public function adrienAction()
+    public function adrienAction(Request $request)
     {
-        return $this->render('XbrosBundle:Default:adrien.html.twig');
+        $session = $request->getSession();
+
+        return $this->render('XbrosBundle:Default:adrien.html.twig', array(
+            'session' => $session->all(),
+        ));
     }
 
-    public function simonAction()
+    public function simonAction(Request $request)
     {
-        return $this->render('XbrosBundle:Default:simon.html.twig');
+        $session = $request->getSession();
+
+        return $this->render('XbrosBundle:Default:simon.html.twig', array(
+            'session' => $session->all(),
+        ));
     }
 
-    public function simonMusicAction($track)
+    public function simonMusicAction(Request $request, $track)
     {
+        $session = $request->getSession();
+
         $em = $this->getDoctrine()->getManager();
 
         if(isset($track))
@@ -67,13 +101,18 @@ class DefaultController extends Controller
             );
 
         return $this->render('XbrosBundle:Default:simon-music.html.twig', array(
+            'session' => $session->all(),
             'track_playing' => $track_playing,
             'tracks' => $tracks
         ));
     }
 
-    public function projectRubikAction()
+    public function projectRubikAction(Request $request)
     {
-        return $this->render('XbrosBundle:Default:project-rubik.html.twig');
+        $session = $request->getSession();
+
+        return $this->render('XbrosBundle:Default:project-rubik.html.twig', array(
+            'session' => $session->all(),
+        ));
     }
 }

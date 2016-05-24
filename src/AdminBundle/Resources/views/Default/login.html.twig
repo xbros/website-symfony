@@ -1,0 +1,41 @@
+{# src/AdminBundle/Resources/views/signin.html.twig #}
+
+{% extends "::layout.html.twig" %}
+
+{% block title %}
+    {{ parent() }} - Admin Sign In
+{% endblock %}
+
+{% block body %}
+
+    <h1>Connexion</h1>
+
+    {% for message in app.session.flashbag.get('notice') %}
+        <div class="alert alert-info" role="alert">
+            <span class="glyphicon glyphicon-ok-sign"></span>
+            <strong>{{ message }}</strong></div>
+
+    {% endfor %}
+
+    <form method="post" action="{{ path('admin_login') }}">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                    <input type="text" class="form-control" placeholder="Nom d'utilisateur" name="login" required>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                    <input type="password" class="form-control" placeholder="Mot de passe" name="password" required>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <button type="submit" class="btn btn-default">Valider</button>
+    </form>
+
+{% endblock %}
