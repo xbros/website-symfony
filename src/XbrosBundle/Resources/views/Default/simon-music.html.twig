@@ -27,18 +27,39 @@
         {
             margin-left: 20px;
         }
+
+        #errors
+        {
+            padding-top: 30px;
+        }
     </style>
 {% endblock %}
 
 {% block body %}
 
     <div class="container">
+
+        <div id="errors">
+            {% for message in app.session.flashbag.get('notice') %}
+                <div class="alert alert-info" role="alert">
+                    <span class="glyphicon glyphicon-ok-sign"></span>
+                    <strong>{{ message }}</strong>
+                </div>
+            {% endfor %}
+        </div>
+
         <h1>Simon music</h1>
 
         <a class="btn btn-default" href="https://soundcloud.com/simon-todeschini" target="_blank"><i class="fa fa-soundcloud"></i> SoundCloud</a>
         <a class="btn btn-default" href="https://www.paypal.me/SimonTodeschini/" target="_blank"><i class="fa fa-cc-paypal"></i> Donation - PayPal</a>
 
         <hr>
+
+        {# if session.login is defined }
+            <a class="btn btn-default" href="{{ path('admin_editsimonmusic') }}"><i class="fa fa-cogs" aria-hidden="true"></i> Editer cette page</a>
+
+            <hr>
+        {% endif #}
 
         {% if track_playing is not empty %}
             <h3>Track Playing</h3>
@@ -79,6 +100,9 @@
                     <th>Cover</th>
                     <th>Track Name</th>
                     <th>Date of publication</th>
+                    {% if session.login is defined %}
+                    <th>Options</th>
+                    {% endif %}
                 </tr>
                 </thead>
                 <tbody>
@@ -86,7 +110,10 @@
                     <tr class="clickable-row" data-href="{{ path('xbros_simonmusic', {'track' : track.name}) }}">
                         <td><img src="{{ asset(track.pathImg) }}" alt="cover-{{ track.name }}"></td>
                         <td>{{ track.name }}</td>
-                        <td>{{ track.date|date("d/m/Y") }}</td>
+                        <td>{{ track.date|date("d-m-Y") }}</td>
+                        {% if session.login is defined %}
+                            <td><a class="btn btn-default" href="{{ path('admin_editsimonmusic', {'track' : track.name}) }}"><i class="fa fa-cogs" aria-hidden="true"></i> Editer cette track</a></td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
                 </tbody>

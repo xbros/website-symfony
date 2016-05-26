@@ -63,4 +63,81 @@ class DefaultController extends Controller
 
         return $this->redirect($this->generateUrl('xbros_homepage'));
     }
+
+
+    public function editSimonMusicAction(Request $request, $track)
+    {
+        $session = $request->getSession();
+
+        if ($session->has('login'))
+        {
+            $em = $this->getDoctrine()->getManager();
+
+            $track = $em
+                ->getRepository('AdminBundle:SimonMusic')
+                ->findOneBy(
+                    array('name' => $track)
+                );
+
+            if ($request->isMethod('POST')) {
+                $track->setName($_POST['name']);
+                if (is_null($_POST['date'])) {
+                    $track->setDate(null);
+                }
+                else {
+                    $track->setDate(new \DateTime($_POST['date']));
+                }
+                if (is_null($_POST['pathWav'])) {
+                    $track->setPathWav(null);
+                }
+                else {
+                    $track->setPathWav($_POST['pathWav']);
+                }
+                if (is_null($_POST['pathMp3'])) {
+                    $track->setPathMp3(null);
+                }
+                else {
+                    $track->setPathMp3($_POST['pathMp3']);
+                }
+                if (is_null($_POST['pathImg'])) {
+                    $track->setPathImg(null);
+                }
+                else {
+                    $track->setPathImg($_POST['pathImg']);
+                }
+                if (is_null($_POST['linkSite'])) {
+                    $track->setLinkSite(null);
+                }
+                else {
+                    $track->setLinkSite($_POST['linkSite']);
+                }
+                if (is_null($_POST['linkUrl'])) {
+                    $track->setLinkUrl(null);
+                }
+                else {
+                    $track->setLinkUrl((string)$_POST['linkUrl']);
+                }
+
+                $em->persist($track);
+
+                $em->flush();
+
+                $session->getFlashBag()->add('notice', 'Track ' . $_POST['name'] . ' modifiée');
+
+                return new RedirectResponse($this->generateUrl('xbros_simonmusic', array(
+                    'track' => $_POST['name'],
+                )));
+            }
+            else {
+                return $this->render('AdminBundle:Default:edit-simon-music.html.twig', array(
+                    'session' => $session->all(),
+                    'track' => $track
+                ));
+            }
+        }
+        else
+        {
+            return new RedirectResponse($this->generateUrl('xbros_simonmusic'));
+        }
+    }
 }

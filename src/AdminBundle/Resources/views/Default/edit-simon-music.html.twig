@@ -1,0 +1,93 @@
+{% extends "::layout.html.twig" %}
+
+{% block title %}
+    {{ parent() }} - Music Edit
+{% endblock %}
+
+{% block head %}
+    {{ parent() }}
+    <style>
+        input.form-control
+        {
+            width: auto;
+        }
+        .table
+        {
+            max-width: 800px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <h3>Track {{ track.name }}</h3>
+
+    <hr>
+
+    <form method="post" action="{{ path('admin_editsimonmusic', {'track': app.request.get('track')}) }}">
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-music" aria-hidden="true"></i></span>
+                    <input type="text" class="form-control" placeholder="Track Name" name="name" required value="{{ track.name }}">
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                    <input type="date" class="form-control" name="date" placeholder="Date of publication" value="{{ track.date|date("d-m-Y") }}">
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-file-audio-o" aria-hidden="true"></i></span>
+                    <input type="text" class="form-control" placeholder="Wav path" name="pathWav" value="{{ track.pathWav }}">
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-file-audio-o" aria-hidden="true"></i></span>
+                    <input type="text" class="form-control" name="pathMp3" placeholder="Mp3 path" value="{{ track.pathMp3 }}">
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-file-image-o" aria-hidden="true"></i></span>
+                    <input type="text" class="form-control" name="pathImg" placeholder="Image path" value="{{ track.pathImg }}">
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-link" aria-hidden="true"></i></span>
+                    <input type="text" class="form-control" placeholder="Link Site" name="linkSite" value="{{ track.linkSite }}">
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-at" aria-hidden="true"></i></span>
+                    <input type="url" class="form-control" name="linkUrl" placeholder="Link URL" value="{{ track.linkUrl }}">
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i> Valider</button>
+    </form>
+
+
+{% endblock %}

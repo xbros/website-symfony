@@ -32,7 +32,6 @@ xbros_simonmusic:
         _controller: XbrosBundle:Default:simonMusic
         track:
 
-
 xbros_projectrubik:
     path:     /project/rubik
     defaults: { _controller: XbrosBundle:Default:projectRubik }

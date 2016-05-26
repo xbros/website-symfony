@@ -82,7 +82,7 @@ class DefaultController extends Controller
         if(isset($track))
         {
             $track_playing = $em
-                ->getRepository('XbrosBundle:SimonMusic')
+                ->getRepository('AdminBundle:SimonMusic')
                 ->findOneBy(
                     array('name' => $track)
                 );
@@ -93,7 +93,7 @@ class DefaultController extends Controller
         }
 
         $tracks = $em
-            ->getRepository('XbrosBundle:SimonMusic')
+            ->getRepository('AdminBundle:SimonMusic')
             ->findBy(
                 array(),    //where
                 array('date' => 'DESC'
@@ -106,6 +106,7 @@ class DefaultController extends Controller
             'tracks' => $tracks
         ));
     }
+    
 
     public function projectRubikAction(Request $request)
     {
