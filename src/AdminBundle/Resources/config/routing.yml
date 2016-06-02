@@ -9,3 +9,7 @@ admin_logout:
 admin_editsimonmusic:
     path:     /edit/simon/music/{track}
     defaults: { _controller: AdminBundle:Default:editSimonMusic }
+
+admin_addsimonmusic:
+    path:     /add/simon/music
+    defaults: { _controller: AdminBundle:Default:addSimonMusic }

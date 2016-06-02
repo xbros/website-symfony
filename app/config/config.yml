@@ -8,6 +8,8 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
+    simon_music_directory: '%kernel.root_dir%/../web/simon-music'
+#    simon_music_directory: '%kernel.root_dir%/home/simon/public_html/website/web/simon-music'
 
 framework:
     #esi:             ~

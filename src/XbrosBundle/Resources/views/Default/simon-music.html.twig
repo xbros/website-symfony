@@ -28,10 +28,12 @@
             margin-left: 20px;
         }
 
+        {% if app.session.flashbag.get('notice') is not empty %}
         #errors
         {
             padding-top: 30px;
         }
+        {% endif %}
     </style>
 {% endblock %}
 
@@ -39,14 +41,16 @@
 
     <div class="container">
 
-        <div id="errors">
-            {% for message in app.session.flashbag.get('notice') %}
-                <div class="alert alert-info" role="alert">
-                    <span class="glyphicon glyphicon-ok-sign"></span>
-                    <strong>{{ message }}</strong>
-                </div>
-            {% endfor %}
-        </div>
+        {% if app.session.flashbag.get('notice') is not empty %}
+            <div id="errors">
+                {% for message in app.session.flashbag.get('notice') %}
+                    <div class="alert alert-info" role="alert">
+                        <span class="glyphicon glyphicon-ok-sign"></span>
+                        <strong>{{ message }}</strong>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
 
         <h1>Simon music</h1>
 
@@ -55,11 +59,11 @@
 
         <hr>
 
-        {# if session.login is defined }
-            <a class="btn btn-default" href="{{ path('admin_editsimonmusic') }}"><i class="fa fa-cogs" aria-hidden="true"></i> Editer cette page</a>
+        {% if session.login is defined %}
+            <a class="btn btn-default" href="{{ path('admin_addsimonmusic') }}"><i class="fa fa-plus-square-o" aria-hidden="true"></i> Ajouter un son</a>
 
             <hr>
-        {% endif #}
+        {% endif %}
 
         {% if track_playing is not empty %}
             <h3>Track Playing</h3>
@@ -67,8 +71,8 @@
 
             <div class="audio-player">
                 <h1>{{ track_playing.name }}</h1>
-                <img class="cover" src="{{ asset(track_playing.pathImg) }}" alt="">
-                <audio id="audio-player" src="{{ asset(track_playing.pathMp3) }}" type="audio/mp3" controls="controls"></audio>
+                <img class="cover" src="{{ asset('simon-music/'~track_playing.pathImg) }}" alt="">
+                <audio id="audio-player" src="{{ asset('simon-music/'~track_playing.pathMp3) }}" type="audio/mp3" controls="controls"></audio>
             </div>
 
             <div class="multiple-buttons">
@@ -79,11 +83,11 @@
                 {% endif %}
 
                 {% if track_playing.pathWav is not null %}
-                    <a class="btn btn-default" href="{{ asset(track_playing.pathWav) }}" download="{{ track_playing.name }}.wav" ><i class="fa fa-file-audio-o"></i> wav Download</a>
+                    <a class="btn btn-default" href="{{ asset('simon-music/'~track_playing.pathWav) }}" download="{{ track_playing.name }}.wav" ><i class="fa fa-file-audio-o"></i> wav Download</a>
                 {% endif %}
 
                 {% if track_playing.pathMp3 is not null %}
-                    <a class="btn btn-default" href="{{ asset(track_playing.pathMp3) }}" download="{{ track_playing.name }}.mp3" ><i class="fa fa-file-audio-o"></i> mp3 Download</a>
+                    <a class="btn btn-default" href="{{ asset('simon-music/'~track_playing.pathMp3) }}" download="{{ track_playing.name }}.mp3" ><i class="fa fa-file-audio-o"></i> mp3 Download</a>
                 {% endif %}
             </div>
 
@@ -101,14 +105,14 @@
                     <th>Track Name</th>
                     <th>Date of publication</th>
                     {% if session.login is defined %}
-                    <th>Options</th>
+                        <th>Options</th>
                     {% endif %}
                 </tr>
                 </thead>
                 <tbody>
                 {% for track in tracks %}
                     <tr class="clickable-row" data-href="{{ path('xbros_simonmusic', {'track' : track.name}) }}">
-                        <td><img src="{{ asset(track.pathImg) }}" alt="cover-{{ track.name }}"></td>
+                        <td><img src="{{ asset('simon-music/'~track.pathImg) }}" alt="cover-{{ track.name }}"></td>
                         <td>{{ track.name }}</td>
                         <td>{{ track.date|date("d-m-Y") }}</td>
                         {% if session.login is defined %}

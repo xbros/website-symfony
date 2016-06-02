@@ -4,20 +4,6 @@
     {{ parent() }} - Music Edit
 {% endblock %}
 
-{% block head %}
-    {{ parent() }}
-    <style>
-        input.form-control
-        {
-            width: auto;
-        }
-        .table
-        {
-            max-width: 800px;
-        }
-    </style>
-{% endblock %}
-
 {% block body %}
     <h3>Track {{ track.name }}</h3>
 
