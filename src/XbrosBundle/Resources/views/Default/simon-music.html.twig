@@ -9,6 +9,7 @@
 {% block head %}
     {{ parent() }}
     <script src="{{ asset('audioplayer/js/mediaelement-and-player.min.js') }}"></script>
+    {# Note: asset() link vers ce qui est dans web #}
     <link rel="stylesheet" href="{{ asset('audioplayer/css/style.css') }}" media="screen">
 
     <style>

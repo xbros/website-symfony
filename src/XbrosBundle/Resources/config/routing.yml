@@ -1,3 +1,4 @@
+# definit les urls: quelle méthode du controller appeler par url
 xbros_homepage:
     path:     /
     defaults: { _controller: XbrosBundle:Default:index }

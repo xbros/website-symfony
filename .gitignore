@@ -17,5 +17,4 @@ web/simon-music/*.jpg
 web/rubik
 .idea/*
 
-*.php~
-*.php~
+*~

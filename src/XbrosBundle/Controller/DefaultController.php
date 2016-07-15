@@ -78,6 +78,8 @@ class DefaultController extends Controller
         $session = $request->getSession();
 
         $em = $this->getDoctrine()->getManager();
+        # Doctrine: pour gerer la bdd en objet
+        # em = entity manager: parle avec la bdd
 
         if(isset($track))
         {
@@ -106,7 +108,7 @@ class DefaultController extends Controller
             'tracks' => $tracks
         ));
     }
-    
+
 
     public function projectRubikAction(Request $request)
     {
