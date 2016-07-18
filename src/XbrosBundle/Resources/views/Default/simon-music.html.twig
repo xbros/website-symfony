@@ -8,9 +8,35 @@
 
 {% block head %}
     {{ parent() }}
-    <script src="{{ asset('audioplayer/js/mediaelement-and-player.min.js') }}"></script>
+    {#<script src="{{ asset('audioplayer/js/mediaelement-and-player.min.js') }}"></script>#}
     {# Note: asset() link vers ce qui est dans web #}
-    <link rel="stylesheet" href="{{ asset('audioplayer/css/style.css') }}" media="screen">
+    {#<link rel="stylesheet" href="{{ asset('audioplayer/css/style.css') }}" media="screen">#}
+    <script type="text/javascript" src="{{ asset('jPlayer-master/dist/jplayer/jquery.jplayer.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('jPlayer-master/dist/skin/blue.monday/css/jplayer.blue.monday.css') }}">
+    {% if track_playing is not empty %}
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $("#jquery_jplayer_1").jPlayer({
+                    ready: function () {
+                        $(this).jPlayer("setMedia", {
+                            title: "{{ track_playing.name }}",
+                            mp3: "{{ asset('simon-music/'~track_playing.pathMp3) }}",
+                        });
+                    },
+                    cssSelectorAncestor: "#jp_container_1",
+                    swfPath: "{{ asset('jPlayer-master/dist/jplayer/') }}",
+                    supplied: "mp3",
+                    useStateClassSkin: true,
+                    autoBlur: false,
+                    smoothPlayBar: true,
+                    keyEnabled: true,
+                    remainingDuration: true,
+                    toggleDuration: true
+                });
+            });
+        </script>
+    {% endif %}
+
 
     <style>
         tbody tr
@@ -67,14 +93,48 @@
         {% endif %}
 
         {% if track_playing is not empty %}
-            <h3>Track Playing</h3>
-
+            <h1>Track Playing - {{ track_playing.name }}</h1>
 
             <div class="audio-player">
-                <h1>{{ track_playing.name }}</h1>
-                <img class="cover" src="{{ asset('simon-music/'~track_playing.pathImg) }}" alt="">
-                <audio id="audio-player" src="{{ asset('simon-music/'~track_playing.pathMp3) }}" type="audio/mp3" controls="controls"></audio>
+                <div id="jquery_jplayer_1" class="jp-jplayer"></div>
+                <div id="jp_container_1" class="jp-audio" role="application" aria-label="media player">
+                    <div class="jp-type-single">
+                        <div class="jp-cover">
+                            <img class="cover" src="{{ asset('simon-music/'~track_playing.pathImg) }}" alt="">
+                        </div>
+                        <div class="jp-gui jp-interface">
+                            <div class="jp-controls">
+                                <button class="jp-play" role="button" tabindex="0">play</button>
+                                <button class="jp-stop" role="button" tabindex="0">stop</button>
+                            </div>
+                            <div class="jp-progress">
+                                <div class="jp-seek-bar">
+                                    <div class="jp-play-bar"></div>
+                                </div>
+                            </div>
+                            <div class="jp-volume-controls">
+                                <button class="jp-mute" role="button" tabindex="0">mute</button>
+                                <button class="jp-volume-max" role="button" tabindex="0">max volume</button>
+                                <div class="jp-volume-bar">
+                                    <div class="jp-volume-bar-value"></div>
+                                </div>
+                            </div>
+                            <div class="jp-time-holder">
+                                <div class="jp-current-time" role="timer" aria-label="time">&nbsp;</div>
+                                <div class="jp-duration" role="timer" aria-label="duration">&nbsp;</div>
+                            </div>
+                        </div>
+                        <div class="jp-details">
+                            <div class="jp-title" aria-label="title">&nbsp;</div>
+                        </div>
+                        <div class="jp-no-solution">
+                            <span>Update Required</span>
+                            To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
+                        </div>
+                    </div>
+                </div>
             </div>
+
 
             <div class="multiple-buttons">
                 {% if track_playing.linkSite == "soundcloud" %}
@@ -133,16 +193,6 @@
         jQuery(document).ready(function($) {
             $(".clickable-row").click(function() {
                 window.document.location = $(this).data("href");
-            });
-        });
-
-        $(document).ready(function() {
-            $('#audio-player').mediaelementplayer({
-                alwaysShowControls: true,
-                features: ['playpause','volume','progress'],
-                audioVolume: 'horizontal',
-                audioWidth: 400,
-                audioHeight: 95
             });
         });
     </script>
