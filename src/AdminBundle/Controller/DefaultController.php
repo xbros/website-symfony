@@ -35,7 +35,10 @@ class DefaultController extends Controller
                 if ($check_avail_login != 0) {
                     $user = $users->findOneByUsername($_POST['login']);
 
-                    if ($user->getPassword() == $_POST['password']) {
+                    $username = $user->getUsername();
+                    $salt = exec("cat /safety/salt.txt");
+
+                    if ($user->getPassword() == md5($_POST['password'].$salt.$username.$salt.$username)) {
                         $session->set('login', $_POST['login']);
                         $session->getFlashBag()->add('notice', 'Utilisateur connecté');
                     } else {
