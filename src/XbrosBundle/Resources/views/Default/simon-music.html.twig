@@ -55,29 +55,16 @@
             margin-left: 20px;
         }
 
-        {% if app.session.flashbag.get('notice') is not empty %}
-        #errors
-        {
-            padding-top: 30px;
+        tr img, .jp-cover img {
+            max-height: 90px;
         }
-        {% endif %}
+
     </style>
 {% endblock %}
 
 {% block body %}
 
     <div class="container">
-
-        {% if app.session.flashbag.get('notice') is not empty %}
-            <div id="errors">
-                {% for message in app.session.flashbag.get('notice') %}
-                    <div class="alert alert-info" role="alert">
-                        <span class="glyphicon glyphicon-ok-sign"></span>
-                        <strong>{{ message }}</strong>
-                    </div>
-                {% endfor %}
-            </div>
-        {% endif %}
 
         <h1>Simon music</h1>
 
@@ -139,12 +126,8 @@
             <div class="multiple-buttons">
                 {% if track_playing.linkSite == "soundcloud" %}
                     <a class="btn btn-default" href="{{ track_playing.linkUrl }}" target="_blank"><i class="fa fa-soundcloud"></i> {{ track_playing.name }}</a>
-                {% else %}
+                {% elseif track_playing.linkSite is not null %}
                     <a class="btn btn-default" href="{{ track_playing.linkUrl }}" target="_blank"><i class="fa fa-external-link"></i> {{ track_playing.name }}</a>
-                {% endif %}
-
-                {% if track_playing.pathWav is not null %}
-                    <a class="btn btn-default" href="{{ asset('simon-music/'~track_playing.pathWav) }}" download="{{ track_playing.name }}.wav" ><i class="fa fa-file-audio-o"></i> wav Download</a>
                 {% endif %}
 
                 {% if track_playing.pathMp3 is not null %}

@@ -4,16 +4,14 @@ namespace AdminBundle\Controller;
 
 use AdminBundle\Entity\SimonMusic;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use AdminBundle\Form\SimonMusicType;
+
 
 class DefaultController extends Controller
 {
@@ -74,81 +72,108 @@ class DefaultController extends Controller
         return $this->redirect($this->generateUrl('xbros_homepage'));
     }
 
-
     public function editSimonMusicAction(Request $request, $track)
     {
         $session = $request->getSession();
 
         if ($session->has('login'))
         {
-            $em = $this->getDoctrine()->getManager();
+            $em = $this
+                ->getDoctrine()
+                ->getManager();
 
             $track = $em
                 ->getRepository('AdminBundle:SimonMusic')
-                ->findOneBy(
-                    array('name' => $track)
-                );
+                ->findOneBy(array(
+                    "name" => $track
+                ));
 
-            if ($request->isMethod('POST')) {
-                $track->setName($_POST['name']);
-                if (is_null($_POST['date'])) {
-                    $track->setDate(null);
+            $fileMp3Old = $track->getPathMp3();
+            $fileImgOld = $track->getPathImg();
+
+            $form = $this->createForm(SimonMusicType::class, $track);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid())
+            {
+                $track = $form->getData();
+
+                $fileMp3 = $track->getPathMp3();
+                $fileImg = $track->getPathImg();
+
+                if (!is_null($fileMp3))
+                {
+                    if ($this->checkFileIsMp3($fileMp3->guessExtension()))
+                    {
+                        $fileMp3Name = $track->getDate()->format('Y-d-m').'_'.strtolower(str_replace(' ', '-', $track->getName())).'.mp3';
+
+                        $fileMp3->move(
+                            $this->getParameter('simon_music_directory'),
+                            $fileMp3Name
+                        );
+
+                        $track->setPathMp3($fileMp3Name);
+                    }
+                    else
+                    {
+                        $session->getFlashBag()->add('error', 'mp3 file is not a supported format (mp3)');
+
+                        return $this->render('AdminBundle:Default:edit-simon-music.html.twig', array(
+                            'session' => $session->all(),
+                            'form' => $form->createView(),
+                        ));
+                    }
+
                 }
-                else {
-                    $track->setDate(new \DateTime($_POST['date']));
+                else if ($fileMp3Old != '')
+                {
+                    $track->setPathMp3($fileMp3Old);
                 }
-                if (is_null($_POST['pathWav'])) {
-                    $track->setPathWav(null);
+
+                if (!is_null($fileImg))
+                {
+                    if ($this->checkFileIsImage($fileImg->guessExtension()))
+                    {
+                        $fileImgName = $track->getDate()->format('Y-d-m').'_'.strtolower(str_replace(' ', '-', $track->getName())).'.'.$fileImg->guessExtension();
+
+                        $fileImg->move(
+                            $this->getParameter('simon_music_directory'),
+                            $fileImgName
+                        );
+
+                        $track->setPathImg($fileImgName);
+                    }
+                    else
+                    {
+                        $session->getFlashBag()->add('error', 'image file is not a supported format (jpg, jpeg, png)');
+
+                        return $this->render('AdminBundle:Default:edit-simon-music.html.twig', array(
+                            'session' => $session->all(),
+                            'form' => $form->createView(),
+                        ));
+                    }
+
                 }
-                else {
-                    $track->setPathWav($_POST['pathWav']);
-                }
-                if (is_null($_POST['pathMp3'])) {
-                    $track->setPathMp3(null);
-                }
-                else {
-                    $track->setPathMp3($_POST['pathMp3']);
-                }
-                if (is_null($_POST['pathImg'])) {
-                    $track->setPathImg(null);
-                }
-                else {
-                    $track->setPathImg($_POST['pathImg']);
-                }
-                if (is_null($_POST['linkSite'])) {
-                    $track->setLinkSite(null);
-                }
-                else {
-                    $track->setLinkSite($_POST['linkSite']);
-                }
-                if (is_null($_POST['linkUrl'])) {
-                    $track->setLinkUrl(null);
-                }
-                else {
-                    $track->setLinkUrl((string)$_POST['linkUrl']);
+                else if ($fileImgOld != '')
+                {
+                    $track->setPathImg($fileImgOld);
                 }
 
                 $em->persist($track);
-
                 $em->flush();
 
-                $session->getFlashBag()->add('notice', 'Track ' . $_POST['name'] . ' modifiée');
-
-                return new RedirectResponse($this->generateUrl('xbros_simonmusic', array(
-                    'track' => $_POST['name'],
-                )));
+                $session->getFlashBag()->add('notice', 'track was added');
+                return $this->redirect($this->generateUrl('xbros_simonmusic'));
             }
-            else {
+            else
+            {
                 return $this->render('AdminBundle:Default:edit-simon-music.html.twig', array(
                     'session' => $session->all(),
-                    'track' => $track
+                    'form' => $form->createView()
                 ));
             }
         }
-        else
-        {
-            return new RedirectResponse($this->generateUrl('xbros_simonmusic'));
-        }
+        return $this->redirect($this->generateUrl('xbros_homepage'));
     }
 
     public function addSimonMusicAction(Request $request)
@@ -157,145 +182,105 @@ class DefaultController extends Controller
 
         if ($session->has('login'))
         {
-//            if ($request->isMethod('POST'))
-//            {
-//
-//                $em = $this->getDoctrine()->getManager();
-//
-//                $track = new SimonMusic();
-//
-//                $track->setName($_POST['name']);
-//                $track->setDate(new \DateTime($_POST['date']));
-//                if (!is_null($_POST['fileWav'])) {
-//                    $track->setPathWav('simon-music/'.$_POST['fileWav']);
-//                }
-//                if (!is_null($_POST['fileMp3'])) {
-//                    $track->setPathMp3('simon-music/'.$_POST['fileMp3']);
-//                }
-//                if (!is_null($_POST['fileImg'])) {
-//                    $track->setPathImg('simon-music/'.$_POST['fileImg']);
-//                }
-//                if (!is_null($_POST['linkSite'])) {
-//                    $track->setLinkSite($_POST['linkSite']);
-//                }
-//                if (!is_null($_POST['linkUrl'])) {
-//                    $track->setLinkUrl($_POST['linkUrl']);
-//                }
-//
-//
-//
-//            }
-//            else
-//            {
-//                return $this->render('AdminBundle:Default:add-simon-music.html.twig', array(
-//                    'session' => $session->all()
-//                ));
-//            }
-
-            $em = $this->getDoctrine()->getManager();
-
             $track = new SimonMusic();
-
-            $form = $this->createFormBuilder($track)
-                ->add('name', TextType::class, array(
-                    'required'    => true,
-                    'label' => 'Track Name',
-                    ))
-                ->add('date', DateType::class, array(
-                    'required'    => true,
-                    'data' => new \DateTime('now'),
-                    'label' => 'Date of publication',
-                ))
-                ->add('pathWav', FileType::class, array(
-                    'required'    => false,
-                    'label' => 'Path Wav',
-                    'empty_data'  => null
-                ))
-                ->add('pathMp3', FileType::class, array(
-                    'required'    => false,
-                    'label' => 'Path Mp3',
-                    'empty_data'  => null
-                ))
-                ->add('pathImg', FileType::class, array(
-                    'required'    => false,
-                    'label' => 'Path Image',
-                    'empty_data'  => null
-                ))
-                ->add('linkSite', TextType::class, array(
-                    'required'    => false,
-                    'label' => 'Link Site',
-                    'empty_data'  => null
-                ))
-                ->add('linkUrl', TextType::class, array(
-                    'required'    => false,
-                    'label' => 'Link Url',
-                    'empty_data'  => null
-                ))
-                ->add('save', SubmitType::class, array('label' => 'Add Track'))
-                ->getForm();
-
+            $form = $this->createForm(SimonMusicType::class, $track);
             $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
-                $fileWav = $track->getPathWav();
+            if ($form->isSubmitted() && $form->isValid())
+            {
+                $em = $this
+                    ->getDoctrine()
+                    ->getManager();
+
+                $track = $form->getData();
+
                 $fileMp3 = $track->getPathMp3();
                 $fileImg = $track->getPathImg();
 
-                if(!is_null($fileWav))
+                if (!is_null($fileMp3))
                 {
-                    $fileWavName = $track->getDate()->format('Y-d-m').'_'.strtolower(str_replace(' ', '-', $track->getName())).'.wav';
+                    if ($this->checkFileIsMp3($fileMp3->guessExtension()))
+                    {
+                        $fileMp3Name = $track->getDate()->format('Y-d-m').'_'.strtolower(str_replace(' ', '-', $track->getName())).'.mp3';
 
-                    $fileWav->move(
-                        $this->container->getParameter('simon_music_directory'),
-                        $fileWavName
-                    );
+                        $fileMp3->move(
+                            $this->getParameter('simon_music_directory'),
+                            $fileMp3Name
+                        );
 
-                    $track->setPathWav($fileWavName);
+                        $track->setPathMp3($fileMp3Name);
+                    }
+                    else
+                    {
+                        $session->getFlashBag()->add('error', 'mp3 file is not a supported format (mp3)');
+
+                        return $this->render('AdminBundle:Default:add-simon-music.html.twig', array(
+                            'session' => $session->all(),
+                            'form' => $form->createView(),
+                        ));
+                    }
+
                 }
-                if(!is_null($fileMp3))
+
+                if (!is_null($fileImg))
                 {
-                    $fileMp3Name = $track->getDate()->format('Y-d-m').'_'.strtolower(str_replace(' ', '-', $track->getName())).'.mp3';
+                    if ($this->checkFileIsImage($fileImg->guessExtension()))
+                    {
+                        $fileImgName = $track->getDate()->format('Y-d-m').'_'.strtolower(str_replace(' ', '-', $track->getName())).'.'.$fileImg->guessExtension();
 
-                    $fileMp3->move(
-                        $this->container->getParameter('simon_music_directory'),
-                        $fileMp3Name
-                    );
+                        $fileImg->move(
+                            $this->getParameter('simon_music_directory'),
+                            $fileImgName
+                        );
 
-                    $track->setPathWav($fileMp3Name);
-                }
-                if(!is_null($fileImg))
-                {
-                    $fileImgName = $track->getDate()->format('Y-d-m').'_'.strtolower(str_replace(' ', '-', $track->getName())).'.jpg';
+                        $track->setPathImg($fileImgName);
+                    }
+                    else
+                    {
+                        $session->getFlashBag()->add('error', 'image file is not a supported format (jpg, jpeg, png)');
 
-                    $fileImg->move(
-                        $this->container->getParameter('simon_music_directory'),
-                        $fileImgName
-                    );
+                        return $this->render('AdminBundle:Default:add-simon-music.html.twig', array(
+                            'session' => $session->all(),
+                            'form' => $form->createView(),
+                        ));
+                    }
 
-                    $track->setPathWav($fileImgName);
                 }
 
                 $em->persist($track);
                 $em->flush();
 
-                return new RedirectResponse($this->generateUrl('xbros_simonmusic', array('track' => $track->getName())));
+                $session->getFlashBag()->add('notice', 'track was added');
+                return $this->redirect($this->generateUrl('xbros_simonmusic'));
             }
-
-            return $this->render('AdminBundle:Default:add-simon-music.html.twig', array(
-                'session' => $session->all(),
-                'form' => $form->createView(),
-            ));
+            else
+            {
+                return $this->render('AdminBundle:Default:add-simon-music.html.twig', array(
+                    'session' => $session->all(),
+                    'form' => $form->createView()
+                ));
+            }
         }
-        else
-        {
-            return new RedirectResponse($this->generateUrl('xbros_simonmusic'));
-        }
+            return $this->redirect($this->generateUrl('xbros_homepage'));
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    private function checkFileIsImage($imageExtension)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'AdminBundle\Entity\SimonMusic',
-        ));
+        $acceptedExtensions = array('jpg', 'JPG', 'jpeg', 'JPEG','png', 'PNG');
+
+        if (in_array($imageExtension, $acceptedExtensions))
+            return true;
+        else
+            return false;
+    }
+
+    private function checkFileIsMp3($mp3Extension)
+    {
+        $acceptedExtensions = array('mp3', 'mpga');
+
+        if (in_array(strtolower($mp3Extension), $acceptedExtensions))
+            return true;
+        else
+            return false;
     }
 }

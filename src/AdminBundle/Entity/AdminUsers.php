@@ -29,7 +29,7 @@ class AdminUsers
     /**
      * @var string
      *
-     * @ORM\Column(name="password", type="string", length=30, nullable=false)
+     * @ORM\Column(name="password", type="string", length=50, nullable=false)
      */
     private $password;
 

@@ -22,13 +22,6 @@ class SimonMusic
     /**
      * @var string
      *
-     * @ORM\Column(name="path_wav", type="string", length=150, nullable=true)
-     */
-    private $pathWav;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="path_mp3", type="string", length=150, nullable=true)
      */
     private $pathMp3;
@@ -93,29 +86,6 @@ class SimonMusic
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set pathWav
-     *
-     * @param string $pathWav
-     * @return SimonMusic
-     */
-    public function setPathWav($pathWav)
-    {
-        $this->pathWav = $pathWav;
-
-        return $this;
-    }
-
-    /**
-     * Get pathWav
-     *
-     * @return string 
-     */
-    public function getPathWav()
-    {
-        return $this->pathWav;
     }
 
     /**

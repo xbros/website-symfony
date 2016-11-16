@@ -6,10 +6,10 @@ admin_logout:
     path:     /logout
     defaults: { _controller: AdminBundle:Default:logout }
 
-admin_editsimonmusic:
-    path:     /edit/simon/music/{track}
-    defaults: { _controller: AdminBundle:Default:editSimonMusic }
-
 admin_addsimonmusic:
     path:     /add/simon/music
     defaults: { _controller: AdminBundle:Default:addSimonMusic }
+
+admin_editsimonmusic:
+    path:     /edit/simon/music/{track}
+    defaults: { _controller: AdminBundle:Default:editSimonMusic }
