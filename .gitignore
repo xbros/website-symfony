@@ -14,7 +14,6 @@
 web/simon-music/*.mp3
 web/simon-music/*.wav
 web/simon-music/*.jpg
-web/rubik
 .idea/*
 
 *~

@@ -1,3 +1,6 @@
 [submodule "web/jPlayer"]
 	path = web/jPlayer
 	url = https://github.com/happyworm/jPlayer.git
+[submodule "web/rubik"]
+	path = web/rubik
+	url = https://github.com/xbros/rubik.git
