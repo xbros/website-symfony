@@ -11,8 +11,9 @@
     {#<script src="{{ asset('audioplayer/js/mediaelement-and-player.min.js') }}"></script>#}
     {# Note: asset() link vers ce qui est dans web #}
     {#<link rel="stylesheet" href="{{ asset('audioplayer/css/style.css') }}" media="screen">#}
-    <script type="text/javascript" src="{{ asset('jPlayer-master/dist/jplayer/jquery.jplayer.js') }}"></script>
-    <link rel="stylesheet" href="{{ asset('jPlayer-master/dist/skin/blue.monday/css/jplayer.blue.monday.css') }}">
+
+    <script type="text/javascript" src="{{ asset('jPlayer/dist/jplayer/jquery.jplayer.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('jPlayer/dist/skin/blue.monday/css/jplayer.blue.monday.css') }}">
     {% if track_playing is not empty %}
         <script type="text/javascript">
             $(document).ready(function(){
@@ -24,7 +25,7 @@
                         });
                     },
                     cssSelectorAncestor: "#jp_container_1",
-                    swfPath: "{{ asset('jPlayer-master/dist/jplayer/') }}",
+                    swfPath: "{{ asset('jPlayer/dist/jplayer/') }}",
                     supplied: "mp3",
                     useStateClassSkin: true,
                     autoBlur: false,
@@ -57,6 +58,15 @@
 
         tr img, .jp-cover img {
             max-height: 90px;
+        }
+
+        .jp-cover {
+            background-color: #CCCCCC;
+            text-align: center;
+        }
+
+        .jp-cover .cover {
+            margin: 10px 0;
         }
 
     </style>
