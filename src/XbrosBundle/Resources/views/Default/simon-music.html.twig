@@ -214,8 +214,7 @@
             [].forEach.call(table, function(tablerow) {
                 tracks.push(tablerow.getElementsByTagName("td")[1].innerHTML);
             });
-            console.log(tracks);
-            for (var i = 0; i < tracks.length; i++) {
+            for (var i = 0; i < tracks.length-1; i++) {
                 if (tracks[i] == "{{ track_playing.name }}") {
                     var url = '{{ path('xbros_simonmusic', {'track' : 'TO_BE_REPLACED'}) }}';
                     window.location.href = url.replace("TO_BE_REPLACED", tracks[i+1]);
