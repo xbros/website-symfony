@@ -15,35 +15,35 @@ class SimonMusic
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=30, nullable=false)
+     * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
     private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="path_mp3", type="string", length=150, nullable=true)
+     * @ORM\Column(name="path_mp3", type="string", length=255, nullable=true)
      */
     private $pathMp3;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="path_img", type="string", length=150, nullable=true)
+     * @ORM\Column(name="path_img", type="string", length=255, nullable=true)
      */
     private $pathImg;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="link_site", type="string", length=30, nullable=true)
+     * @ORM\Column(name="link_site", type="string", length=255, nullable=true)
      */
     private $linkSite;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="link_url", type="string", length=100, nullable=true)
+     * @ORM\Column(name="link_url", type="string", length=255, nullable=true)
      */
     private $linkUrl;
 
@@ -53,6 +53,13 @@ class SimonMusic
      * @ORM\Column(name="date", type="date", nullable=false)
      */
     private $date;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="iframe_url", type="string", length=255, nullable=true)
+     */
+    private $iframeUrl;
 
     /**
      * @var integer
@@ -201,6 +208,29 @@ class SimonMusic
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * Set iframeUrl
+     *
+     * @param string $iframeUrl
+     * @return SimonMusic
+     */
+    public function setIframeUrl($iframeUrl)
+    {
+        $this->iframeUrl = $iframeUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get iframeUrl
+     *
+     * @return string 
+     */
+    public function getIframeUrl()
+    {
+        return $this->iframeUrl;
     }
 
     /**

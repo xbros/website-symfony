@@ -52,6 +52,10 @@ class SimonMusicType extends AbstractType
                 'required' => false,
                 'empty_data' => null
                 ))
+            ->add('iframeUrl', UrlType::class, array(
+                'required' => false,
+                'empty_data' => null
+            ))
             ->add('save', SubmitType::class, array('label' => 'Submit'))
             
         ;
